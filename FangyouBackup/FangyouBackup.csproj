@@ -43,6 +43,10 @@
       <HintPath>..\packages\Common.Logging.Core.3.3.1\lib\net40\Common.Logging.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="log4net, Version=2.0.8.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <HintPath>..\packages\log4net.2.0.8\lib\net40-full\log4net.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="PetaPoco">
       <HintPath>..\..\FangyouNet\REF\PetaPoco.dll</HintPath>
     </Reference>
@@ -60,9 +64,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AppSetingHelper.cs" />
+    <Compile Include="BackupJob.cs" />
     <Compile Include="QuartzManager.cs" />
     <Compile Include="Sql2000Desktop.cs" />
     <Compile Include="Sql2005.cs" />
+    <Compile Include="Sql2008.cs" />
     <Compile Include="SqlBase.cs" />
     <Compile Include="FormMain.cs">
       <SubType>Form</SubType>

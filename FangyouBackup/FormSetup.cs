@@ -25,7 +25,8 @@ namespace FangyouBackup
 
         private void GetFangyouInfo (out string fangyouVer,out string fangyouClient)
         {
-            var db = new Database(GlobleVariable.ConnString, "System.Data.SqlClient");
+            var conn = string.Format("server={0};database={1};uid={2};pwd={3};Asynchronous Processing=true", GlobleVariable.DatabaseAddress, GlobleVariable.DatabaseName, GlobleVariable.DatabaseName, GlobleVariable.DatabasePassword);
+            var db = new Database(conn, "System.Data.SqlClient");
             fangyouVer = "";
             fangyouClient = "";
             try
@@ -53,12 +54,12 @@ namespace FangyouBackup
 
         private void buttonSave_Click(object sender, EventArgs e)
         {
-            if(textBoxDbUser.Text != "")
+            if(textBoxDbUser.Text == "")
             {
                 MessageBox.Show("未输入数据库用户名");
                 return;
             }
-            if (comboBoxDatabase.SelectedText != "")
+            if (comboBoxDatabase.SelectedItem.ToString() == "")
             {
                 MessageBox.Show("未输入数据库");
                 return;
@@ -70,9 +71,9 @@ namespace FangyouBackup
             AppSetingHelper.UpdateAppString("DatabsaePwd", textBoxDBPwd.Text);
             AppSetingHelper.UpdateAppString("localKeepDay", numericUpDownLocalKeepDay.Value.ToString());
             AppSetingHelper.UpdateAppString("yunKeepDay", numericUpDownYunKeeyDay.Value.ToString());
-            AppSetingHelper.UpdateAppString("yunServer", comboBoxYun.SelectedValue.ToString());
-            AppSetingHelper.UpdateAppString("SavePath", labelSavePath.Text);
-            AppSetingHelper.UpdateAppString("BuckupTime", numericUpDownBackupTime.Value.ToString());
+            AppSetingHelper.UpdateAppString("yunServer", comboBoxYun.SelectedItem.ToString());
+            AppSetingHelper.UpdateAppString("LocalSavePath", labelSavePath.Text);
+            AppSetingHelper.UpdateAppString("BackupTime", numericUpDownBackupTime.Value.ToString());
             string outFangyouClient, outFangyouVer;
             GetFangyouInfo(out outFangyouVer, out outFangyouClient);
             AppSetingHelper.UpdateAppString("FangyouVer", outFangyouVer);
@@ -84,18 +85,21 @@ namespace FangyouBackup
 
         private void FormSetup_Load(object sender, EventArgs e)
         {
-            labelSavePath.Text = GlobleVariable.SavePath;
-            if (string.IsNullOrEmpty(GlobleVariable.SavePath) || GlobleVariable.SavePath=="")
+            ///本地保存
+            labelSavePath.Text = GlobleVariable.LocalSavePath;
+            if (string.IsNullOrEmpty(GlobleVariable.LocalSavePath) || GlobleVariable.LocalSavePath == "")
             {
                 if (!Directory.Exists(Application.StartupPath + "\\Backup"))
                 {
                     Directory.CreateDirectory(Application.StartupPath + "\\Backup");
                 }
                 folderBrowserDialog1.SelectedPath = Path.Combine(Application.StartupPath, "Backup");
-                GlobleVariable.SavePath = folderBrowserDialog1.SelectedPath;
-                labelSavePath.Text = GlobleVariable.SavePath;
+                GlobleVariable.LocalSavePath = folderBrowserDialog1.SelectedPath;
+                labelSavePath.Text = GlobleVariable.LocalSavePath;
             }
-           
+            ///异地
+
+            numericUpDownBackupTime.Value = GlobleVariable.RunTime;
             
         }
 
@@ -103,11 +107,11 @@ namespace FangyouBackup
         {
             try
             {
-               GlobleVariable.ConnString =
+                string ConnString =
                 String.Format("Data Source={0};Initial Catalog=master;User ID={1};PWD={2}", "192.168.56.2", textBoxDbUser.Text, textBoxDBPwd.Text);
 
                 DataTable DBNameTable = new DataTable();
-                SqlDataAdapter Adapter = new SqlDataAdapter("select name from master..sysdatabases", new SqlConnection( GlobleVariable.ConnString));
+                SqlDataAdapter Adapter = new SqlDataAdapter("select name from master..sysdatabases", new SqlConnection( ConnString));
 
                 lock (Adapter)
                 {
@@ -129,7 +133,7 @@ namespace FangyouBackup
 
                 DriveInfo[] drives = DriveInfo.GetDrives();
                 //检测房友所在磁盘空间
-                Adapter = new SqlDataAdapter("select name,fileName from master..sysaltfiles where name like '{0}%' order by name", new SqlConnection(GlobleVariable.ConnString));
+                Adapter = new SqlDataAdapter("select name,fileName from master..sysaltfiles where name like '{0}%' order by name", new SqlConnection(ConnString));
 
                 lock (Adapter)
                 {
@@ -152,8 +156,8 @@ namespace FangyouBackup
            
             if (result == DialogResult.OK)
             {
-                GlobleVariable.SavePath = folderBrowserDialog1.SelectedPath;
-                labelSavePath.Text = GlobleVariable.SavePath.Length>30? GlobleVariable.SavePath.Substring(0,30)+"...": GlobleVariable.SavePath;
+                GlobleVariable.LocalSavePath = folderBrowserDialog1.SelectedPath;
+                labelSavePath.Text = GlobleVariable.LocalSavePath.Length>30? GlobleVariable.LocalSavePath.Substring(0,30)+"...": GlobleVariable.LocalSavePath;
             }
         }
     }

@@ -25,14 +25,14 @@ namespace FangyouBackup
 
         private void bw_DoWork(object sender, DoWorkEventArgs e)
         {
-            _conn = string.Format("server=.;database={0};uid={1};pwd={2}", GlobleVariable.DatabaseName, GlobleVariable.DatabaseName, GlobleVariable.DatabasePassword);
-            string file = GlobleVariable.SavePath + DateTime.Now.ToString("yyyyMMdd");
+            _conn = string.Format("server={0};database={1};uid={2};pwd={3}",GlobleVariable.DatabaseAddress, GlobleVariable.DatabaseName, GlobleVariable.DatabaseName, GlobleVariable.DatabasePassword);
+            string file = GlobleVariable.LocalSavePath + DateTime.Now.ToString("yyyyMMdd")+".bak";
             if (File.Exists(file))
             {
                 Directory.Delete(file);
             }
-            //还原的数据库MyDataBase
-            string sql = "BACKUP DATABASE " + GlobleVariable.DatabaseName + " TO DISK = '" + file + ".bak' ";
+            //备份
+            string sql = "BACKUP DATABASE " + GlobleVariable.DatabaseName + " TO DISK = '" + file ;
             System.Data.SqlClient.SqlConnection DbConn = new SqlConnection(_conn);
             DbConn.Open();
             SqlCommand comm = DbConn.CreateCommand();
@@ -43,7 +43,7 @@ namespace FangyouBackup
 
         private void bw_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            throw new NotImplementedException();
+            GlobleVariable.LastBackupTime = DateTime.Now;
         }
     }
 }
