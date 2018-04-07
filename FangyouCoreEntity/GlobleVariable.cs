@@ -4,12 +4,12 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Text;
 
-namespace FangyouBackup
+namespace FangyouCoreEntity
 {
     public static class GlobleVariable
     {
         public static SqlTypeEnum SqlServerType { get; set; }
-        public static DateTime LastBackupTime { get; set; }
+        public static DateTime? LastBackupTime { get; set; }
         public static DateTime StartTime { get; set; }
         /// <summary>
         /// 本地保留位置

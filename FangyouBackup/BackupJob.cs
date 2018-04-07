@@ -1,4 +1,5 @@
-﻿using Quartz;
+﻿using FangyouCoreEntity;
+using Quartz;
 using System;
 using System.Collections.Generic;
 using System.Linq;

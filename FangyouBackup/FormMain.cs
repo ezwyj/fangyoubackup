@@ -1,6 +1,8 @@
-﻿using System;
+﻿using FangyouCoreEntity;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Configuration;
 using System.Data;
 using System.Drawing;
 using System.IO;
@@ -56,11 +58,31 @@ namespace FangyouBackup
 
         private void FormMain_Load(object sender, EventArgs e)
         {
-            if (GlobleVariable.RunTime == 0)
+
+            if (ConfigurationManager.AppSettings["RunTime"] == null || ConfigurationManager.AppSettings["RunTime"]=="")
             {
                 var setup = new FormSetup();
                 setup.ShowDialog();
             }
+            else
+            {
+                GlobleVariable.DatabaseAddress = ConfigurationManager.AppSettings["DatabaseAddress"].ToString();
+                GlobleVariable.DatabaseName = ConfigurationManager.AppSettings["DatabaseName"].ToString();
+                GlobleVariable.DatabaseUser = ConfigurationManager.AppSettings["DatabaseUser"].ToString();
+                GlobleVariable.DatabasePassword = ConfigurationManager.AppSettings["DatabasePassword"].ToString();
+                GlobleVariable.LocalKeeyDay = int.Parse(ConfigurationManager.AppSettings["LocalKeeyDay"].ToString());
+                DateTime outLastBackupTime;
+                if (DateTime.TryParse(ConfigurationManager.AppSettings["LastBackupTime"].ToString(),out outLastBackupTime)){
+                    GlobleVariable.LastBackupTime = outLastBackupTime;
+                }
+                
+                GlobleVariable.LocalSavePath= ConfigurationManager.AppSettings["LocalSavePath"].ToString();
+                GlobleVariable.RunTime=int.Parse( ConfigurationManager.AppSettings["RunTime"].ToString());
+            }
+            
+
+
+
             string cronExpression = "0 0 "+GlobleVariable.RunTime.ToString()+" * * ? ";　　//=>这是指每天的9点和16点执行任务
             QuartzManager.ExecuteByCron<BackupJob>(cronExpression);　　//=>这是调用Cron计划方法
 

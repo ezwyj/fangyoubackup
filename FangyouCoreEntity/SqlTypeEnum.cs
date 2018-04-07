@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace FangyouBackup
+namespace FangyouCoreEntity
 {
     public enum SqlTypeEnum
     {

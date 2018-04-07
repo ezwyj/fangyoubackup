@@ -12,8 +12,8 @@ namespace FangyouBackupServer
 
         public void ProcessRequest(HttpContext context)
         {
-            context.Response.ContentType = "text/plain";
-            context.Response.Write("Hello World");
+            string sign = context.Request.QueryString["sign"];
+
         }
 
         public bool IsReusable

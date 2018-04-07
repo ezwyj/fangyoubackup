@@ -5,7 +5,7 @@ using System.Data.SqlClient;
 using System.IO;
 using System.Text;
 
-namespace FangyouBackup
+namespace FangyouCoreEntity
 {
     public class Sql2000Desktop : SqlBase
     {

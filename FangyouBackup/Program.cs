@@ -7,6 +7,8 @@ using Quartz;
 using Quartz.Impl;
 using Quartz.Impl.Triggers;
 using System.Text;
+using FangyouCoreEntity;
+using log4net;
 
 namespace FangyouBackup
 {
@@ -56,15 +58,17 @@ namespace FangyouBackup
         {
             string str = GetExceptionMsg(e.ExceptionObject as Exception, e.ToString());
             MessageBox.Show(str, "系统错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
-
+            ILog Logger = log4net.LogManager.GetLogger("AppError");
+            Logger.Error(str);
         }
 
         private static void Application_ThreadException(object sender, ThreadExceptionEventArgs e)
         {
             string str = GetExceptionMsg(e.Exception, e.ToString());
             MessageBox.Show(str, "系统错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
-
-        }
+            ILog Logger = log4net.LogManager.GetLogger("AppError");
+            Logger.Error(str);
+    }
         /// <summary> 
         /// 生成自定义异常消息 
         /// </summary> 

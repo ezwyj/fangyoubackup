@@ -8,6 +8,8 @@ using System.Text;
 using System.Windows.Forms;
 using System.IO;
 using PetaPoco;
+using FangyouCoreEntity;
+using System.Configuration;
 
 namespace FangyouBackup
 {
@@ -25,13 +27,13 @@ namespace FangyouBackup
 
         private void GetFangyouInfo (out string fangyouVer,out string fangyouClient)
         {
-            var conn = string.Format("server={0};database={1};uid={2};pwd={3};Asynchronous Processing=true", GlobleVariable.DatabaseAddress, GlobleVariable.DatabaseName, GlobleVariable.DatabaseName, GlobleVariable.DatabasePassword);
+            var conn = string.Format("server={0};database={1};uid={2};pwd={3}", GlobleVariable.DatabaseAddress, GlobleVariable.DatabaseName, GlobleVariable.DatabaseUser, GlobleVariable.DatabasePassword);
             var db = new Database(conn, "System.Data.SqlClient");
             fangyouVer = "";
             fangyouClient = "";
             try
             {
-                fangyouVer = db.ExecuteScalar<string>("select paramData from sysSet where paramName='mbVersion'");
+                fangyouVer = db.ExecuteScalar<string>("select paramData from sysSet where paramName='Version'");
                 fangyouClient = db.ExecuteScalar<string>("select paramData from sysSet where paramName='LicenseUser'");
 
             }
@@ -54,6 +56,11 @@ namespace FangyouBackup
 
         private void buttonSave_Click(object sender, EventArgs e)
         {
+            if(comboBoxDatabase.SelectedItem==null)
+            {
+                MessageBox.Show("未输入数据库名");
+                return;
+            }
             if(textBoxDbUser.Text == "")
             {
                 MessageBox.Show("未输入数据库用户名");
@@ -65,30 +72,39 @@ namespace FangyouBackup
                 return;
             }
 
-            
-            AppSetingHelper.UpdateAppString("DatabaseName", comboBoxDatabase.SelectedText);
-            AppSetingHelper.UpdateAppString("DatabaseUser", textBoxDbUser.Text);
-            AppSetingHelper.UpdateAppString("DatabsaePwd", textBoxDBPwd.Text);
+                        AppSetingHelper.UpdateAppString("DatabaseName", GlobleVariable.DatabaseName);
+            AppSetingHelper.UpdateAppString("DatabaseUser", GlobleVariable.DatabaseUser);
+            AppSetingHelper.UpdateAppString("DatabsaePwd", GlobleVariable.DatabasePassword);
             AppSetingHelper.UpdateAppString("localKeepDay", numericUpDownLocalKeepDay.Value.ToString());
-            AppSetingHelper.UpdateAppString("yunKeepDay", numericUpDownYunKeeyDay.Value.ToString());
-            AppSetingHelper.UpdateAppString("yunServer", comboBoxYun.SelectedItem.ToString());
             AppSetingHelper.UpdateAppString("LocalSavePath", labelSavePath.Text);
             AppSetingHelper.UpdateAppString("BackupTime", numericUpDownBackupTime.Value.ToString());
+
+
+            AppSetingHelper.UpdateAppString("RunTime", "1");
+
+
             string outFangyouClient, outFangyouVer;
             GetFangyouInfo(out outFangyouVer, out outFangyouClient);
+            GlobleVariable.FangyouClient = outFangyouClient;
+            GlobleVariable.FangyouVer = outFangyouVer;
             AppSetingHelper.UpdateAppString("FangyouVer", outFangyouVer);
             AppSetingHelper.UpdateAppString("FangyouClient", outFangyouClient);
-            AppSetingHelper.UpdateAppString("runTime", "");
-            AppSetingHelper.UpdateAppString("runTime", "");
-            AppSetingHelper.UpdateAppString("runTime", "");
+            var sqlBase = new SqlBase();
+
+            GlobleVariable.SqlServerType = sqlBase.GetSqlVersion();
+            AppSetingHelper.UpdateAppString("SqlType", GlobleVariable.SqlServerType.ToString());
+
+            GlobleVariable.RunTime = int.Parse(numericUpDownBackupTime.Value.ToString("00")) ;
+            this.Close();
         }
 
         private void FormSetup_Load(object sender, EventArgs e)
         {
             ///本地保存
-            labelSavePath.Text = GlobleVariable.LocalSavePath;
+           
             if (string.IsNullOrEmpty(GlobleVariable.LocalSavePath) || GlobleVariable.LocalSavePath == "")
             {
+               // 初始化 
                 if (!Directory.Exists(Application.StartupPath + "\\Backup"))
                 {
                     Directory.CreateDirectory(Application.StartupPath + "\\Backup");
@@ -97,9 +113,10 @@ namespace FangyouBackup
                 GlobleVariable.LocalSavePath = folderBrowserDialog1.SelectedPath;
                 labelSavePath.Text = GlobleVariable.LocalSavePath;
             }
+          
             ///异地
 
-            numericUpDownBackupTime.Value = GlobleVariable.RunTime;
+           
             
         }
 
@@ -129,16 +146,19 @@ namespace FangyouBackup
                 if(comboBoxDatabase.Items.Count>0)
                 {
                     MessageBox.Show("连接成功，请选择对应数据库");
+                    GlobleVariable.DatabaseAddress = "192.168.56.2";
+                    GlobleVariable.DatabaseUser = textBoxDbUser.Text;
+                    GlobleVariable.DatabasePassword = textBoxDBPwd.Text;
                 }
 
-                DriveInfo[] drives = DriveInfo.GetDrives();
-                //检测房友所在磁盘空间
-                Adapter = new SqlDataAdapter("select name,fileName from master..sysaltfiles where name like '{0}%' order by name", new SqlConnection(ConnString));
+                //DriveInfo[] drives = DriveInfo.GetDrives();
+                ////检测房友所在磁盘空间
+                //Adapter = new SqlDataAdapter("select name,fileName from master..sysaltfiles where name like '{0}%' order by name", new SqlConnection(ConnString));
 
-                lock (Adapter)
-                {
-                    Adapter.Fill(DBNameTable);
-                }
+                //lock (Adapter)
+                //{
+                //    Adapter.Fill(DBNameTable);
+                //}
             }
             catch
             {
@@ -159,6 +179,13 @@ namespace FangyouBackup
                 GlobleVariable.LocalSavePath = folderBrowserDialog1.SelectedPath;
                 labelSavePath.Text = GlobleVariable.LocalSavePath.Length>30? GlobleVariable.LocalSavePath.Substring(0,30)+"...": GlobleVariable.LocalSavePath;
             }
+        }
+
+        private void comboBoxDatabase_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            GlobleVariable.DatabaseName = comboBoxDatabase.SelectedItem.ToString();
+
+
         }
     }
 }
