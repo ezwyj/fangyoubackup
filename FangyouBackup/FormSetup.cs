@@ -71,10 +71,10 @@ namespace FangyouBackup
                 MessageBox.Show("未输入数据库");
                 return;
             }
-
-                        AppSetingHelper.UpdateAppString("DatabaseName", GlobleVariable.DatabaseName);
+            AppSetingHelper.UpdateAppString("DatabaseAddress", GlobleVariable.DatabaseAddress);
+            AppSetingHelper.UpdateAppString("DatabaseName", GlobleVariable.DatabaseName);
             AppSetingHelper.UpdateAppString("DatabaseUser", GlobleVariable.DatabaseUser);
-            AppSetingHelper.UpdateAppString("DatabsaePwd", GlobleVariable.DatabasePassword);
+            AppSetingHelper.UpdateAppString("DatabasePassword", GlobleVariable.DatabasePassword);
             AppSetingHelper.UpdateAppString("localKeepDay", numericUpDownLocalKeepDay.Value.ToString());
             AppSetingHelper.UpdateAppString("LocalSavePath", labelSavePath.Text);
             AppSetingHelper.UpdateAppString("BackupTime", numericUpDownBackupTime.Value.ToString());
@@ -125,7 +125,7 @@ namespace FangyouBackup
             try
             {
                 string ConnString =
-                String.Format("Data Source={0};Initial Catalog=master;User ID={1};PWD={2}", "192.168.56.2", textBoxDbUser.Text, textBoxDBPwd.Text);
+                String.Format("Data Source={0};Initial Catalog=master;User ID={1};PWD={2}", GlobleVariable.DatabaseAddress, textBoxDbUser.Text, textBoxDBPwd.Text);
 
                 DataTable DBNameTable = new DataTable();
                 SqlDataAdapter Adapter = new SqlDataAdapter("select name from master..sysdatabases", new SqlConnection( ConnString));

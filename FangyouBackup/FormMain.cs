@@ -70,7 +70,16 @@ namespace FangyouBackup
                 GlobleVariable.DatabaseName = ConfigurationManager.AppSettings["DatabaseName"].ToString();
                 GlobleVariable.DatabaseUser = ConfigurationManager.AppSettings["DatabaseUser"].ToString();
                 GlobleVariable.DatabasePassword = ConfigurationManager.AppSettings["DatabasePassword"].ToString();
-                GlobleVariable.LocalKeeyDay = int.Parse(ConfigurationManager.AppSettings["LocalKeeyDay"].ToString());
+                int outLocalKeepDay = 1;
+                if(int.TryParse(ConfigurationManager.AppSettings["LocalKeepDay"], out outLocalKeepDay))
+                {
+                    GlobleVariable.LocalKeeyDay = outLocalKeepDay;
+                }
+                else
+                {
+                    GlobleVariable.LocalKeeyDay = 1;
+                }
+                
                 DateTime outLastBackupTime;
                 if (DateTime.TryParse(ConfigurationManager.AppSettings["LastBackupTime"].ToString(),out outLastBackupTime)){
                     GlobleVariable.LastBackupTime = outLastBackupTime;
@@ -100,7 +109,23 @@ namespace FangyouBackup
             {
                 richTextBoxLog.Text = File.ReadAllText(fileName);
             }
-            
+            var checkSql = new SqlBase();
+
+            switch (checkSql.GetSqlVersion())
+            {
+                case SqlTypeEnum.Sql2000:
+                    var backup2000 = new Sql2000Desktop();
+                    backup2000.Backup();
+                    break;
+                case SqlTypeEnum.Sql2005:
+                    var backup2005 = new Sql2005();
+                    backup2005.Backup();
+                    break;
+                case SqlTypeEnum.Sql2008:
+                    var backup2008 = new Sql2008();
+                    backup2008.Backup();
+                    break;
+            }
         }
     }
 }

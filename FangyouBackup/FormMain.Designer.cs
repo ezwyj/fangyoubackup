@@ -34,7 +34,6 @@
             this.buttonExit = new System.Windows.Forms.Button();
             this.labelLastBackupTime = new System.Windows.Forms.Label();
             this.buttonSetup = new System.Windows.Forms.Button();
-            this.labelLocation = new System.Windows.Forms.Label();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.richTextBoxLog = new System.Windows.Forms.RichTextBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
@@ -76,7 +75,7 @@
             // labelLastBackupTime
             // 
             this.labelLastBackupTime.AutoSize = true;
-            this.labelLastBackupTime.Location = new System.Drawing.Point(415, 9);
+            this.labelLastBackupTime.Location = new System.Drawing.Point(15, 60);
             this.labelLastBackupTime.Name = "labelLastBackupTime";
             this.labelLastBackupTime.Size = new System.Drawing.Size(105, 15);
             this.labelLastBackupTime.TabIndex = 2;
@@ -92,15 +91,6 @@
             this.buttonSetup.Text = "数据配置";
             this.buttonSetup.UseVisualStyleBackColor = true;
             this.buttonSetup.Click += new System.EventHandler(this.buttonSetup_Click);
-            // 
-            // labelLocation
-            // 
-            this.labelLocation.AutoSize = true;
-            this.labelLocation.Location = new System.Drawing.Point(9, 33);
-            this.labelLocation.Name = "labelLocation";
-            this.labelLocation.Size = new System.Drawing.Size(112, 15);
-            this.labelLocation.TabIndex = 5;
-            this.labelLocation.Text = "异地备份位置：";
             // 
             // statusStrip1
             // 
@@ -139,7 +129,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(9, 58);
+            this.label1.Location = new System.Drawing.Point(15, 34);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(97, 15);
             this.label1.TabIndex = 10;
@@ -148,7 +138,7 @@
             // labelFangyouVer
             // 
             this.labelFangyouVer.AutoSize = true;
-            this.labelFangyouVer.Location = new System.Drawing.Point(9, 9);
+            this.labelFangyouVer.Location = new System.Drawing.Point(475, 9);
             this.labelFangyouVer.Name = "labelFangyouVer";
             this.labelFangyouVer.Size = new System.Drawing.Size(82, 15);
             this.labelFangyouVer.TabIndex = 11;
@@ -157,7 +147,7 @@
             // labelFangyouClient
             // 
             this.labelFangyouClient.AutoSize = true;
-            this.labelFangyouClient.Location = new System.Drawing.Point(148, 8);
+            this.labelFangyouClient.Location = new System.Drawing.Point(15, 9);
             this.labelFangyouClient.Name = "labelFangyouClient";
             this.labelFangyouClient.Size = new System.Drawing.Size(97, 15);
             this.labelFangyouClient.TabIndex = 12;
@@ -173,12 +163,13 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.statusStrip1);
-            this.Controls.Add(this.labelLocation);
             this.Controls.Add(this.buttonSetup);
             this.Controls.Add(this.labelLastBackupTime);
             this.Controls.Add(this.buttonExit);
             this.Controls.Add(this.buttonMin);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "FormMain";
             this.Text = "  房友备份小助手";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormMain_FormClosing);
@@ -196,7 +187,6 @@
         private System.Windows.Forms.Button buttonExit;
         private System.Windows.Forms.Label labelLastBackupTime;
         private System.Windows.Forms.Button buttonSetup;
-        private System.Windows.Forms.Label labelLocation;
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.RichTextBox richTextBoxLog;
         private System.Windows.Forms.GroupBox groupBox1;
