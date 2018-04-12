@@ -65,6 +65,7 @@
   <ItemGroup>
     <Compile Include="AppSetingHelper.cs" />
     <Compile Include="BackupJob.cs" />
+    <Compile Include="FileLog.cs" />
     <Compile Include="QuartzManager.cs" />
     <Compile Include="FormMain.cs">
       <SubType>Form</SubType>

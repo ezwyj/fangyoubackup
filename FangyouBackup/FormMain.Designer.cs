@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormMain));
             this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
             this.buttonMin = new System.Windows.Forms.Button();
             this.buttonExit = new System.Windows.Forms.Button();
@@ -46,8 +47,10 @@
             // 
             // notifyIcon1
             // 
-            this.notifyIcon1.Text = "房友数据云备份";
+            this.notifyIcon1.Icon = ((System.Drawing.Icon)(resources.GetObject("notifyIcon1.Icon")));
+            this.notifyIcon1.Text = "房友备份小助手";
             this.notifyIcon1.Visible = true;
+            this.notifyIcon1.DoubleClick += new System.EventHandler(this.notifyIcon1_DoubleClick);
             this.notifyIcon1.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.notifyIcon1_MouseDoubleClick);
             // 
             // buttonMin
@@ -133,25 +136,25 @@
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(97, 15);
             this.label1.TabIndex = 10;
-            this.label1.Text = "本地备份文件";
+            this.label1.Text = "本地备份路径";
             // 
             // labelFangyouVer
             // 
             this.labelFangyouVer.AutoSize = true;
-            this.labelFangyouVer.Location = new System.Drawing.Point(475, 9);
+            this.labelFangyouVer.Location = new System.Drawing.Point(456, 9);
             this.labelFangyouVer.Name = "labelFangyouVer";
-            this.labelFangyouVer.Size = new System.Drawing.Size(82, 15);
+            this.labelFangyouVer.Size = new System.Drawing.Size(52, 15);
             this.labelFangyouVer.TabIndex = 11;
-            this.labelFangyouVer.Text = "房友版本：";
+            this.labelFangyouVer.Text = "版本：";
             // 
             // labelFangyouClient
             // 
             this.labelFangyouClient.AutoSize = true;
             this.labelFangyouClient.Location = new System.Drawing.Point(15, 9);
             this.labelFangyouClient.Name = "labelFangyouClient";
-            this.labelFangyouClient.Size = new System.Drawing.Size(97, 15);
+            this.labelFangyouClient.Size = new System.Drawing.Size(67, 15);
             this.labelFangyouClient.TabIndex = 12;
-            this.labelFangyouClient.Text = "房友客户名：";
+            this.labelFangyouClient.Text = "客户名：";
             // 
             // FormMain
             // 
@@ -168,10 +171,11 @@
             this.Controls.Add(this.buttonExit);
             this.Controls.Add(this.buttonMin);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "FormMain";
-            this.Text = "  房友备份小助手";
+            this.Text = "备份小助手";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormMain_FormClosing);
             this.Load += new System.EventHandler(this.FormMain_Load);
             this.groupBox1.ResumeLayout(false);

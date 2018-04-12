@@ -93,8 +93,9 @@ namespace FangyouBackup
 
             GlobleVariable.SqlServerType = sqlBase.GetSqlVersion();
             AppSetingHelper.UpdateAppString("SqlType", GlobleVariable.SqlServerType.ToString());
+            AppSetingHelper.UpdateAppString("LocalKeeyDay", GlobleVariable.LocalKeeyDay.ToString());
 
-            GlobleVariable.RunTime = int.Parse(numericUpDownBackupTime.Value.ToString("00")) ;
+
             this.Close();
         }
 
@@ -186,6 +187,11 @@ namespace FangyouBackup
             GlobleVariable.DatabaseName = comboBoxDatabase.SelectedItem.ToString();
 
 
+        }
+
+        private void numericUpDownLocalKeepDay_ValueChanged(object sender, EventArgs e)
+        {
+            GlobleVariable.LocalKeeyDay = (int) numericUpDownLocalKeepDay.Value;
         }
     }
 }

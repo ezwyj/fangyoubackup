@@ -102,11 +102,12 @@ namespace FangyouBackup
         private void timerRefresh_Tick(object sender, EventArgs e)
         {
             labelLastBackupTime.Text = "最后备份时间:" + GlobleVariable.LastBackupTime.ToString();
-            labelLocation.Text = "异地备份位置：" + GlobleVariable.YunSavePath;
+            
             richTextBoxLog.Text = "";
-            string fileName = Application.ExecutablePath + "\\logs\\app_log.txt";
+            string fileName = System.AppDomain.CurrentDomain.BaseDirectory + "\\logs\\app_log.txt";
             if (File.Exists(fileName))
             {
+                richTextBoxLog.Text = "";
                 richTextBoxLog.Text = File.ReadAllText(fileName);
             }
             var checkSql = new SqlBase();
@@ -122,10 +123,15 @@ namespace FangyouBackup
                     backup2005.Backup();
                     break;
                 case SqlTypeEnum.Sql2008:
-                    var backup2008 = new Sql2008();
+                    var backup2008 = new Sql2008(fileName);
                     backup2008.Backup();
                     break;
             }
+        }
+
+        private void notifyIcon1_DoubleClick(object sender, EventArgs e)
+        {
+            this.Show();
         }
     }
 }

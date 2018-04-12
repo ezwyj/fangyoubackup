@@ -222,6 +222,7 @@
             0,
             0,
             0});
+            this.numericUpDownLocalKeepDay.ValueChanged += new System.EventHandler(this.numericUpDownLocalKeepDay_ValueChanged);
             // 
             // label5
             // 

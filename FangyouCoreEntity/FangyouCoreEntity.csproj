@@ -40,6 +40,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BackupReport.cs" />
+    <Compile Include="FileLog.cs" />
     <Compile Include="GlobleVariable.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Sql2000Desktop.cs" />

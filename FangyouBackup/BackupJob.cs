@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Windows.Forms;
 
 namespace FangyouBackup
 {
@@ -12,7 +13,7 @@ namespace FangyouBackup
         public void Execute(IJobExecutionContext context)
         {
             var checkSql =new SqlBase();
-
+            string fileName = Application.ExecutablePath + "\\logs\\app_log.txt";
             switch (checkSql.GetSqlVersion())
             {
                 case SqlTypeEnum.Sql2000:
@@ -24,7 +25,7 @@ namespace FangyouBackup
                     backup2005.Backup();
                     break;
                 case SqlTypeEnum.Sql2008:
-                    var backup2008 = new Sql2008();
+                    var backup2008 = new Sql2008(fileName);
                     backup2008.Backup();
                     break;
             }

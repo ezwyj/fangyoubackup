@@ -34,9 +34,13 @@ namespace FangyouBackup
             
 
             GlobleVariable.RunTime = runTime;
-            
 
-            GlobleVariable.DatabasePassword = ConfigurationManager.AppSettings["DatabsaePwd"];
+            GlobleVariable.DatabaseAddress = ConfigurationManager.AppSettings["DatabaseAddress"];
+            if(string.IsNullOrEmpty(GlobleVariable.DatabaseAddress))
+            {
+                GlobleVariable.DatabaseAddress = "192.168.56.2";
+            }
+            GlobleVariable.DatabasePassword = ConfigurationManager.AppSettings["DatabasePassword"];
             GlobleVariable.DatabaseUser = ConfigurationManager.AppSettings["DatabaseUser"];
 
             DateTime lasttime = DateTime.Now;
@@ -44,8 +48,8 @@ namespace FangyouBackup
             GlobleVariable.LastBackupTime = lasttime;
 
             GlobleVariable.StartTime = DateTime.Now;
-            GlobleVariable.FangyouClient = ConfigurationManager.AppSettings["FangyouVer"];
-            GlobleVariable.FangyouVer = ConfigurationManager.AppSettings["FangyouClient"];
+            GlobleVariable.FangyouClient = ConfigurationManager.AppSettings["FangyouClient"];
+            GlobleVariable.FangyouVer = ConfigurationManager.AppSettings["FangyouVer"];
 
 
 
@@ -60,6 +64,9 @@ namespace FangyouBackup
             MessageBox.Show(str, "系统错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
             ILog Logger = log4net.LogManager.GetLogger("AppError");
             Logger.Error(str);
+            Application.Exit();
+            Application.ExitThread();
+            System.Environment.Exit(0);
         }
 
         private static void Application_ThreadException(object sender, ThreadExceptionEventArgs e)
@@ -68,7 +75,10 @@ namespace FangyouBackup
             MessageBox.Show(str, "系统错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
             ILog Logger = log4net.LogManager.GetLogger("AppError");
             Logger.Error(str);
-    }
+            Application.Exit();
+            Application.ExitThread();
+            System.Environment.Exit(0);
+        }
         /// <summary> 
         /// 生成自定义异常消息 
         /// </summary> 
