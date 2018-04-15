@@ -18,7 +18,7 @@ namespace FangyouCoreEntity
         public override void Backup()
         {
             _conn = string.Format("server={0};database={1};uid={2};pwd={3};Asynchronous Processing=true", GlobleVariable.DatabaseAddress, GlobleVariable.DatabaseName, GlobleVariable.DatabaseUser, GlobleVariable.DatabasePassword);
-            string file = GlobleVariable.LocalSavePath+"\\" + DateTime.Now.ToString("yyyyMMdd") + ".bak";
+            string file = System.Environment.CurrentDirectory + "\\Backup\\"+ DateTime.Now.ToString("yyyyMMdd") + ".bak";
             if (!File.Exists(file))
             {
                 //还原的数据库MyDataBase
@@ -30,7 +30,7 @@ namespace FangyouCoreEntity
                 comm.CommandType = System.Data.CommandType.Text;
 
                 comm.BeginExecuteNonQuery(BackupEnd, comm);
-                log.log("开始备份");
+                log.log(DateTime.Now.ToLongDateString() + "开始备份");
             }
            
 
@@ -46,7 +46,8 @@ namespace FangyouCoreEntity
             }
             GlobleVariable.LastBackupTime = DateTime.Now;
 
-            log.log("备份完成");
+            log.log(DateTime.Now.ToLongDateString() + "备份完成");
+            Report();
         }
     }
 }

@@ -59,7 +59,7 @@ namespace FangyouBackup
         private void FormMain_Load(object sender, EventArgs e)
         {
 
-            if (ConfigurationManager.AppSettings["RunTime"] == null || ConfigurationManager.AppSettings["RunTime"]=="")
+            if (GlobleVariable.RunTime==0)
             {
                 var setup = new FormSetup();
                 setup.ShowDialog();
@@ -85,7 +85,7 @@ namespace FangyouBackup
                     GlobleVariable.LastBackupTime = outLastBackupTime;
                 }
                 
-                GlobleVariable.LocalSavePath= ConfigurationManager.AppSettings["LocalSavePath"].ToString();
+               
                 GlobleVariable.RunTime=int.Parse( ConfigurationManager.AppSettings["RunTime"].ToString());
             }
             
@@ -101,13 +101,13 @@ namespace FangyouBackup
 
         private void timerRefresh_Tick(object sender, EventArgs e)
         {
-            labelLastBackupTime.Text = "最后备份时间:" + GlobleVariable.LastBackupTime.ToString();
+          
             
             richTextBoxLog.Text = "";
             string fileName = System.AppDomain.CurrentDomain.BaseDirectory + "\\logs\\app_log.txt";
             if (File.Exists(fileName))
             {
-                richTextBoxLog.Text = "";
+                richTextBoxLog.Clear();
                 richTextBoxLog.Text = File.ReadAllText(fileName);
             }
             var checkSql = new SqlBase();

@@ -39,13 +39,10 @@
             this.comboBoxDatabase = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.labelSavePath = new System.Windows.Forms.Label();
-            this.buttonChangePath = new System.Windows.Forms.Button();
             this.numericUpDownBackupTime = new System.Windows.Forms.NumericUpDown();
             this.label7 = new System.Windows.Forms.Label();
             this.numericUpDownLocalKeepDay = new System.Windows.Forms.NumericUpDown();
             this.label5 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -56,7 +53,7 @@
             // buttonCancel
             // 
             this.buttonCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonCancel.Location = new System.Drawing.Point(454, 298);
+            this.buttonCancel.Location = new System.Drawing.Point(454, 247);
             this.buttonCancel.Name = "buttonCancel";
             this.buttonCancel.Size = new System.Drawing.Size(79, 25);
             this.buttonCancel.TabIndex = 0;
@@ -67,7 +64,7 @@
             // buttonSave
             // 
             this.buttonSave.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonSave.Location = new System.Drawing.Point(369, 298);
+            this.buttonSave.Location = new System.Drawing.Point(369, 247);
             this.buttonSave.Name = "buttonSave";
             this.buttonSave.Size = new System.Drawing.Size(79, 25);
             this.buttonSave.TabIndex = 1;
@@ -77,8 +74,7 @@
             // 
             // groupBox1
             // 
-            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
+            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox1.Controls.Add(this.buttonConnection);
             this.groupBox1.Controls.Add(this.textBoxDBPwd);
@@ -158,41 +154,20 @@
             // 
             // groupBox2
             // 
-            this.groupBox2.Controls.Add(this.labelSavePath);
-            this.groupBox2.Controls.Add(this.buttonChangePath);
             this.groupBox2.Controls.Add(this.numericUpDownBackupTime);
             this.groupBox2.Controls.Add(this.label7);
             this.groupBox2.Controls.Add(this.numericUpDownLocalKeepDay);
             this.groupBox2.Controls.Add(this.label5);
-            this.groupBox2.Controls.Add(this.label4);
             this.groupBox2.Location = new System.Drawing.Point(13, 113);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(520, 179);
+            this.groupBox2.Size = new System.Drawing.Size(520, 118);
             this.groupBox2.TabIndex = 10;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "参数相关";
             // 
-            // labelSavePath
-            // 
-            this.labelSavePath.AutoSize = true;
-            this.labelSavePath.Location = new System.Drawing.Point(127, 31);
-            this.labelSavePath.Name = "labelSavePath";
-            this.labelSavePath.Size = new System.Drawing.Size(0, 15);
-            this.labelSavePath.TabIndex = 10;
-            // 
-            // buttonChangePath
-            // 
-            this.buttonChangePath.Location = new System.Drawing.Point(427, 119);
-            this.buttonChangePath.Name = "buttonChangePath";
-            this.buttonChangePath.Size = new System.Drawing.Size(80, 23);
-            this.buttonChangePath.TabIndex = 9;
-            this.buttonChangePath.Text = "变更路径";
-            this.buttonChangePath.UseVisualStyleBackColor = true;
-            this.buttonChangePath.Click += new System.EventHandler(this.buttonChangePath_Click);
-            // 
             // numericUpDownBackupTime
             // 
-            this.numericUpDownBackupTime.Location = new System.Drawing.Point(434, 148);
+            this.numericUpDownBackupTime.Location = new System.Drawing.Point(151, 62);
             this.numericUpDownBackupTime.Name = "numericUpDownBackupTime";
             this.numericUpDownBackupTime.Size = new System.Drawing.Size(73, 25);
             this.numericUpDownBackupTime.TabIndex = 6;
@@ -205,7 +180,7 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(282, 150);
+            this.label7.Location = new System.Drawing.Point(17, 72);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(128, 15);
             this.label7.TabIndex = 5;
@@ -213,9 +188,9 @@
             // 
             // numericUpDownLocalKeepDay
             // 
-            this.numericUpDownLocalKeepDay.Location = new System.Drawing.Point(133, 146);
+            this.numericUpDownLocalKeepDay.Location = new System.Drawing.Point(150, 24);
             this.numericUpDownLocalKeepDay.Name = "numericUpDownLocalKeepDay";
-            this.numericUpDownLocalKeepDay.Size = new System.Drawing.Size(73, 25);
+            this.numericUpDownLocalKeepDay.Size = new System.Drawing.Size(120, 25);
             this.numericUpDownLocalKeepDay.TabIndex = 2;
             this.numericUpDownLocalKeepDay.Value = new decimal(new int[] {
             1,
@@ -227,26 +202,17 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(14, 148);
+            this.label5.Location = new System.Drawing.Point(17, 34);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(113, 15);
             this.label5.TabIndex = 1;
             this.label5.Text = "本地保留(天)：";
             // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(6, 21);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(82, 15);
-            this.label4.TabIndex = 0;
-            this.label4.Text = "保存路径：";
-            // 
             // FormSetup
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(544, 335);
+            this.ClientSize = new System.Drawing.Size(544, 284);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.buttonSave);
@@ -281,12 +247,9 @@
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.NumericUpDown numericUpDownLocalKeepDay;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.Label label4;
         private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog1;
         private System.Windows.Forms.Button buttonConnection;
         private System.Windows.Forms.NumericUpDown numericUpDownBackupTime;
         private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.Button buttonChangePath;
-        private System.Windows.Forms.Label labelSavePath;
     }
 }

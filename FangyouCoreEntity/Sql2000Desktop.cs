@@ -9,6 +9,7 @@ namespace FangyouCoreEntity
 {
     public class Sql2000Desktop : SqlBase
     {
+
         public override void Backup()
         {
             
@@ -26,7 +27,7 @@ namespace FangyouCoreEntity
         private void bw_DoWork(object sender, DoWorkEventArgs e)
         {
             _conn = string.Format("server={0};database={1};uid={2};pwd={3}",GlobleVariable.DatabaseAddress, GlobleVariable.DatabaseName, GlobleVariable.DatabaseName, GlobleVariable.DatabasePassword);
-            string file = GlobleVariable.LocalSavePath + DateTime.Now.ToString("yyyyMMdd")+".bak";
+            string file = System.Environment.CurrentDirectory+ "\\Backup\\"+ DateTime.Now.ToString("yyyyMMdd")+".bak";
             if (File.Exists(file))
             {
                 Directory.Delete(file);

@@ -11,10 +11,7 @@ namespace FangyouCoreEntity
         public static SqlTypeEnum SqlServerType { get; set; }
         public static DateTime? LastBackupTime { get; set; }
         public static DateTime StartTime { get; set; }
-        /// <summary>
-        /// 本地保留位置
-        /// </summary>
-        public static string LocalSavePath { get; set; }
+
         /// <summary>
         /// 异地保留位置
         /// </summary>

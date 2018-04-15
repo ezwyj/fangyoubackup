@@ -1,7 +1,10 @@
-﻿using PetaPoco;
+﻿using Newtonsoft.Json;
+using PetaPoco;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data.SqlClient;
+using System.Net;
 using System.Text;
 
 namespace FangyouCoreEntity
@@ -38,6 +41,24 @@ namespace FangyouCoreEntity
                 return SqlTypeEnum.Sql2008;
             }
             return SqlTypeEnum.Sql2000;
+        }
+
+        public void Report ()
+        {
+            System.Net.WebClient WebClientObj = new System.Net.WebClient();
+
+            var BackupReportEntity = new BackupReport();
+            BackupReportEntity.BackupTime = DateTime.Now;
+            BackupReportEntity.BackupState =true;
+            BackupReportEntity.FangyouClient = GlobleVariable.FangyouClient;
+            BackupReportEntity.FangyouVer = GlobleVariable.FangyouVer;
+
+
+            WebClient client = new WebClient();
+            // client.UseDefaultCredentials = true;
+            string URI = System.Configuration.ConfigurationManager.AppSettings["url"] + "?report=" + JsonConvert.SerializeObject(BackupReportEntity);
+            client.DownloadData( URI);
+
         }
     }
 }

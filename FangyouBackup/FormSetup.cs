@@ -71,12 +71,11 @@ namespace FangyouBackup
                 MessageBox.Show("未输入数据库");
                 return;
             }
-            AppSetingHelper.UpdateAppString("DatabaseAddress", GlobleVariable.DatabaseAddress);
+
             AppSetingHelper.UpdateAppString("DatabaseName", GlobleVariable.DatabaseName);
             AppSetingHelper.UpdateAppString("DatabaseUser", GlobleVariable.DatabaseUser);
             AppSetingHelper.UpdateAppString("DatabasePassword", GlobleVariable.DatabasePassword);
             AppSetingHelper.UpdateAppString("localKeepDay", numericUpDownLocalKeepDay.Value.ToString());
-            AppSetingHelper.UpdateAppString("LocalSavePath", labelSavePath.Text);
             AppSetingHelper.UpdateAppString("BackupTime", numericUpDownBackupTime.Value.ToString());
 
 
@@ -101,22 +100,9 @@ namespace FangyouBackup
 
         private void FormSetup_Load(object sender, EventArgs e)
         {
-            ///本地保存
-           
-            if (string.IsNullOrEmpty(GlobleVariable.LocalSavePath) || GlobleVariable.LocalSavePath == "")
-            {
-               // 初始化 
-                if (!Directory.Exists(Application.StartupPath + "\\Backup"))
-                {
-                    Directory.CreateDirectory(Application.StartupPath + "\\Backup");
-                }
-                folderBrowserDialog1.SelectedPath = Path.Combine(Application.StartupPath, "Backup");
-                GlobleVariable.LocalSavePath = folderBrowserDialog1.SelectedPath;
-                labelSavePath.Text = GlobleVariable.LocalSavePath;
-            }
+            
           
-            ///异地
-
+            
            
             
         }
@@ -177,8 +163,6 @@ namespace FangyouBackup
            
             if (result == DialogResult.OK)
             {
-                GlobleVariable.LocalSavePath = folderBrowserDialog1.SelectedPath;
-                labelSavePath.Text = GlobleVariable.LocalSavePath.Length>30? GlobleVariable.LocalSavePath.Substring(0,30)+"...": GlobleVariable.LocalSavePath;
             }
         }
 

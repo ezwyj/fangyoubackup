@@ -38,7 +38,7 @@ namespace FangyouBackup
             GlobleVariable.DatabaseAddress = ConfigurationManager.AppSettings["DatabaseAddress"];
             if(string.IsNullOrEmpty(GlobleVariable.DatabaseAddress))
             {
-                GlobleVariable.DatabaseAddress = "192.168.56.2";
+                GlobleVariable.DatabaseAddress = "127.0.0.1";
             }
             GlobleVariable.DatabasePassword = ConfigurationManager.AppSettings["DatabasePassword"];
             GlobleVariable.DatabaseUser = ConfigurationManager.AppSettings["DatabaseUser"];

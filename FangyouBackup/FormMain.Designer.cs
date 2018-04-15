@@ -33,13 +33,11 @@
             this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
             this.buttonMin = new System.Windows.Forms.Button();
             this.buttonExit = new System.Windows.Forms.Button();
-            this.labelLastBackupTime = new System.Windows.Forms.Label();
             this.buttonSetup = new System.Windows.Forms.Button();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.richTextBoxLog = new System.Windows.Forms.RichTextBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.timerRefresh = new System.Windows.Forms.Timer(this.components);
-            this.label1 = new System.Windows.Forms.Label();
             this.labelFangyouVer = new System.Windows.Forms.Label();
             this.labelFangyouClient = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
@@ -75,15 +73,6 @@
             this.buttonExit.UseVisualStyleBackColor = true;
             this.buttonExit.Click += new System.EventHandler(this.buttonExit_Click);
             // 
-            // labelLastBackupTime
-            // 
-            this.labelLastBackupTime.AutoSize = true;
-            this.labelLastBackupTime.Location = new System.Drawing.Point(15, 60);
-            this.labelLastBackupTime.Name = "labelLastBackupTime";
-            this.labelLastBackupTime.Size = new System.Drawing.Size(105, 15);
-            this.labelLastBackupTime.TabIndex = 2;
-            this.labelLastBackupTime.Text = "最后备份时间:";
-            // 
             // buttonSetup
             // 
             this.buttonSetup.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
@@ -109,16 +98,16 @@
             // 
             this.richTextBoxLog.Location = new System.Drawing.Point(6, 24);
             this.richTextBoxLog.Name = "richTextBoxLog";
-            this.richTextBoxLog.Size = new System.Drawing.Size(590, 197);
+            this.richTextBoxLog.Size = new System.Drawing.Size(590, 226);
             this.richTextBoxLog.TabIndex = 0;
             this.richTextBoxLog.Text = "";
             // 
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.richTextBoxLog);
-            this.groupBox1.Location = new System.Drawing.Point(12, 89);
+            this.groupBox1.Location = new System.Drawing.Point(14, 58);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(602, 227);
+            this.groupBox1.Size = new System.Drawing.Size(602, 256);
             this.groupBox1.TabIndex = 9;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "运行情况";
@@ -126,17 +115,8 @@
             // timerRefresh
             // 
             this.timerRefresh.Enabled = true;
-            this.timerRefresh.Interval = 60000;
+            this.timerRefresh.Interval = 10000;
             this.timerRefresh.Tick += new System.EventHandler(this.timerRefresh_Tick);
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(15, 34);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(97, 15);
-            this.label1.TabIndex = 10;
-            this.label1.Text = "本地备份路径";
             // 
             // labelFangyouVer
             // 
@@ -163,11 +143,9 @@
             this.ClientSize = new System.Drawing.Size(626, 376);
             this.Controls.Add(this.labelFangyouClient);
             this.Controls.Add(this.labelFangyouVer);
-            this.Controls.Add(this.label1);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.buttonSetup);
-            this.Controls.Add(this.labelLastBackupTime);
             this.Controls.Add(this.buttonExit);
             this.Controls.Add(this.buttonMin);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
@@ -189,13 +167,11 @@
         private System.Windows.Forms.NotifyIcon notifyIcon1;
         private System.Windows.Forms.Button buttonMin;
         private System.Windows.Forms.Button buttonExit;
-        private System.Windows.Forms.Label labelLastBackupTime;
         private System.Windows.Forms.Button buttonSetup;
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.RichTextBox richTextBoxLog;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Timer timerRefresh;
-        private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label labelFangyouVer;
         private System.Windows.Forms.Label labelFangyouClient;
     }
