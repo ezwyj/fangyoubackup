@@ -31,9 +31,17 @@ namespace FangyouBackup
             
             int runTime = 0;
             var firstRunBool = int.TryParse(ConfigurationManager.AppSettings["runTime"].ToString(), out runTime);
-            
 
-            GlobleVariable.RunTime = runTime;
+
+            int BackupTime = 0;
+            if (int.TryParse(ConfigurationManager.AppSettings["BackupTime"].ToString(), out BackupTime))
+            {
+                GlobleVariable.BackupTime = BackupTime;
+            }
+            else
+            {
+                GlobleVariable.BackupTime = 1;
+            }
 
             GlobleVariable.DatabaseAddress = ConfigurationManager.AppSettings["DatabaseAddress"];
             if(string.IsNullOrEmpty(GlobleVariable.DatabaseAddress))
@@ -43,14 +51,15 @@ namespace FangyouBackup
             GlobleVariable.DatabasePassword = ConfigurationManager.AppSettings["DatabasePassword"];
             GlobleVariable.DatabaseUser = ConfigurationManager.AppSettings["DatabaseUser"];
 
-            DateTime lasttime = DateTime.Now;
-            DateTime.TryParse(ConfigurationManager.AppSettings["LastBackupTime"].ToString(), out lasttime);
-            GlobleVariable.LastBackupTime = lasttime;
+            //DateTime lasttime = DateTime.Now;
+            //DateTime.TryParse(ConfigurationManager.AppSettings["LastBackupTime"].ToString(), out lasttime);
+            //GlobleVariable.LastBackupTime = lasttime;
 
             GlobleVariable.StartTime = DateTime.Now;
             GlobleVariable.FangyouClient = ConfigurationManager.AppSettings["FangyouClient"];
             GlobleVariable.FangyouVer = ConfigurationManager.AppSettings["FangyouVer"];
 
+            GlobleVariable.Logger = log4net.LogManager.GetLogger("AppError");
 
 
             Application.Run(new FormMain());
@@ -62,8 +71,8 @@ namespace FangyouBackup
         {
             string str = GetExceptionMsg(e.ExceptionObject as Exception, e.ToString());
             MessageBox.Show(str, "系统错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            ILog Logger = log4net.LogManager.GetLogger("AppError");
-            Logger.Error(str);
+            Exception exp = e.ExceptionObject as Exception;
+            GlobleVariable.Logger.Error(exp.Message + exp.StackTrace);
             Application.Exit();
             Application.ExitThread();
             System.Environment.Exit(0);
@@ -73,8 +82,7 @@ namespace FangyouBackup
         {
             string str = GetExceptionMsg(e.Exception, e.ToString());
             MessageBox.Show(str, "系统错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            ILog Logger = log4net.LogManager.GetLogger("AppError");
-            Logger.Error(str);
+            GlobleVariable.Logger.Error(e.Exception.Message + e.Exception.StackTrace);
             Application.Exit();
             Application.ExitThread();
             System.Environment.Exit(0);

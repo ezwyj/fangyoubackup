@@ -7,7 +7,6 @@ using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 using System.IO;
-using PetaPoco;
 using FangyouCoreEntity;
 using System.Configuration;
 
@@ -28,30 +27,41 @@ namespace FangyouBackup
         private void GetFangyouInfo (out string fangyouVer,out string fangyouClient)
         {
             var conn = string.Format("server={0};database={1};uid={2};pwd={3}", GlobleVariable.DatabaseAddress, GlobleVariable.DatabaseName, GlobleVariable.DatabaseUser, GlobleVariable.DatabasePassword);
-            var db = new Database(conn, "System.Data.SqlClient");
+            var db = new System.Data.SqlClient.SqlConnection(conn);
             fangyouVer = "";
             fangyouClient = "";
+            db.Open();
+            var cmd = db.CreateCommand();
+
             try
             {
-                fangyouVer = db.ExecuteScalar<string>("select paramData from sysSet where paramName='Version'");
-                fangyouClient = db.ExecuteScalar<string>("select paramData from sysSet where paramName='LicenseUser'");
+
+                cmd.CommandText = "select paramData from sysSet where paramName = 'Version'";
+                fangyouVer = cmd.ExecuteScalar().ToString();
+                cmd.CommandText = "select paramData from sysSet where paramName='LicenseUser'";
+                fangyouClient = cmd.ExecuteScalar().ToString();
 
             }
-            catch(Exception e)
+            catch (Exception e)
             {
+                GlobleVariable.Logger.Error(e.Message + e.StackTrace);
+                try
+                {
 
-            }
-            try
-            {
-                fangyouVer = db.ExecuteScalar<string>("select paramData from sysSet where paramName='Version'");
-                fangyouClient = db.ExecuteScalar<string>("select paramData from sysSet where paramName='LicenseUser'");
-            }
-            catch(Exception e )
-            {
+                    cmd.CommandText = "select paramData from sysSet where paramName = 'Version'";
+                    fangyouVer = cmd.ExecuteScalar().ToString();
+                    cmd.CommandText = "select paramData from sysSet where paramName='LicenseUser'";
+                    fangyouClient = cmd.ExecuteScalar().ToString();
+                }
+                catch (Exception ee)
+                {
 
+                }
             }
+            db.Close();
 
-             db.Dispose();
+            db.Dispose();
+
         }
 
         private void buttonSave_Click(object sender, EventArgs e)
@@ -112,17 +122,18 @@ namespace FangyouBackup
             try
             {
                 string ConnString =
-                String.Format("Data Source={0};Initial Catalog=master;User ID={1};PWD={2}", GlobleVariable.DatabaseAddress, textBoxDbUser.Text, textBoxDBPwd.Text);
-
-                DataTable DBNameTable = new DataTable();
-                SqlDataAdapter Adapter = new SqlDataAdapter("select name from master..sysdatabases", new SqlConnection( ConnString));
-
-                lock (Adapter)
-                {
-                    Adapter.Fill(DBNameTable);
-                }
+                String.Format("Data Source={0};Initial Catalog=master;User ID={1};Password={2}", GlobleVariable.DatabaseAddress, textBoxDbUser.Text, textBoxDBPwd.Text);
+                var db = new SqlConnection(ConnString);
+                 string sql = "select name from master..sysdatabases";
+                var cmd = db.CreateCommand();
+                db.Open();
+                var reader = cmd.ExecuteReader();
+                DataTable dt = new DataTable();
+                dt.Load(reader);
+                
+                
                 comboBoxDatabase.Items.Clear();
-                foreach (DataRow row in DBNameTable.Rows)
+                foreach (DataRow row in dt.Rows)
                 {
                     comboBoxDatabase.Items.Add(row["name"]);
                 }
@@ -133,7 +144,6 @@ namespace FangyouBackup
                 if(comboBoxDatabase.Items.Count>0)
                 {
                     MessageBox.Show("连接成功，请选择对应数据库");
-                    GlobleVariable.DatabaseAddress = "192.168.56.2";
                     GlobleVariable.DatabaseUser = textBoxDbUser.Text;
                     GlobleVariable.DatabasePassword = textBoxDBPwd.Text;
                 }
@@ -147,9 +157,10 @@ namespace FangyouBackup
                 //    Adapter.Fill(DBNameTable);
                 //}
             }
-            catch
+            catch(Exception ex )
             {
-                MessageBox.Show("未能成功找到相关数据库，请确认输入正确的数据库用户名与密码");
+                MessageBox.Show("未能成功找到相关数据库，请确认输入正确的数据库用户名与密码"+ex.Message);
+                GlobleVariable.Logger.Error(ex.Message + ex.StackTrace);
             }
 
            

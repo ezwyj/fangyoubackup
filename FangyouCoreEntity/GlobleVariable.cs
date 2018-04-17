@@ -1,4 +1,5 @@
-﻿using System;
+﻿using log4net;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
@@ -27,7 +28,7 @@ namespace FangyouCoreEntity
         /// <summary>
         /// 定时备份时间
         /// </summary>
-        public static int RunTime { get; set; }
+        public static int BackupTime { get; set; }
         /// <summary>
         /// 本地保存天数
         /// </summary>
@@ -38,6 +39,6 @@ namespace FangyouCoreEntity
         public static int YunKeepDay { get; set; }
         
 
-
+        public static ILog Logger { get; set; }
     }
 }

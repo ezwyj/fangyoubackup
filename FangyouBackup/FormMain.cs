@@ -59,7 +59,7 @@ namespace FangyouBackup
         private void FormMain_Load(object sender, EventArgs e)
         {
 
-            if (GlobleVariable.RunTime==0)
+            if (ConfigurationManager.AppSettings["RunTime"] == null || ConfigurationManager.AppSettings["RunTime"] == "0")
             {
                 var setup = new FormSetup();
                 setup.ShowDialog();
@@ -80,19 +80,16 @@ namespace FangyouBackup
                     GlobleVariable.LocalKeeyDay = 1;
                 }
                 
-                DateTime outLastBackupTime;
-                if (DateTime.TryParse(ConfigurationManager.AppSettings["LastBackupTime"].ToString(),out outLastBackupTime)){
-                    GlobleVariable.LastBackupTime = outLastBackupTime;
-                }
+               
                 
                
-                GlobleVariable.RunTime=int.Parse( ConfigurationManager.AppSettings["RunTime"].ToString());
+                GlobleVariable.BackupTime=int.Parse( ConfigurationManager.AppSettings["RunTime"].ToString());
             }
             
 
 
 
-            string cronExpression = "0 0 "+GlobleVariable.RunTime.ToString()+" * * ? ";　　//=>这是指每天的9点和16点执行任务
+            string cronExpression = "0 0 "+GlobleVariable.BackupTime.ToString()+" * * ? ";　　//=>这是指每天的9点和16点执行任务
             QuartzManager.ExecuteByCron<BackupJob>(cronExpression);　　//=>这是调用Cron计划方法
 
             labelFangyouClient.Text = GlobleVariable.FangyouClient;

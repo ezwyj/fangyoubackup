@@ -1,9 +1,9 @@
 ﻿using Newtonsoft.Json;
-using PetaPoco;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data.SqlClient;
+using System.IO;
 using System.Net;
 using System.Text;
 
@@ -60,5 +60,11 @@ namespace FangyouCoreEntity
             client.DownloadData( URI);
 
         }
+
+        protected bool CheckFile()
+        {
+            return File.Exists(System.Environment.CurrentDirectory + "\\Backup\\" + DateTime.Now.ToString("yyyyMMdd") + ".bak");
+        }
+
     }
 }
