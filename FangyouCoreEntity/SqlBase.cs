@@ -61,6 +61,7 @@ namespace FangyouCoreEntity
 
         }
 
+
         protected bool CheckFile()
         {
             return File.Exists(System.Environment.CurrentDirectory + "\\Backup\\" + DateTime.Now.ToString("yyyyMMdd") + ".bak");

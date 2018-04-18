@@ -14,20 +14,20 @@ namespace FangyouCoreEntity
         }
         public override void Backup()
         {
-            _conn = string.Format("server={0};database={1};uid={2};pwd={3};Asynchronous Processing=true",GlobleVariable.DatabaseAddress, GlobleVariable.DatabaseName, GlobleVariable.DatabaseName, GlobleVariable.DatabasePassword);
+            _conn = string.Format("server={0};database={1};uid={2};pwd={3};Asynchronous Processing=true",GlobleVariable.DatabaseAddress, GlobleVariable.DatabaseName, GlobleVariable.DatabaseUser, GlobleVariable.DatabasePassword);
             string file = System.Environment.CurrentDirectory + "\\Backup\\"  + DateTime.Now.ToString("yyyyMMdd")+ ".bak";
-            if (File.Exists(file))
+            if (!File.Exists(file))
             {
-                Directory.Delete(file);
+                //还原的数据库MyDataBase
+                string sql = "BACKUP DATABASE " + GlobleVariable.DatabaseName + " TO DISK = '" + file + "'";
+                System.Data.SqlClient.SqlConnection DbConn = new SqlConnection(_conn);
+                DbConn.Open();
+                SqlCommand comm = DbConn.CreateCommand();
+                comm.CommandText = sql;
+                comm.CommandType = System.Data.CommandType.Text;
+                comm.BeginExecuteNonQuery(BackupEnd, comm);
             }
-            //还原的数据库MyDataBase
-            string sql = "BACKUP DATABASE " + GlobleVariable.DatabaseName + " TO DISK = '" + file + "'";
-            System.Data.SqlClient.SqlConnection DbConn = new SqlConnection(_conn);
-            DbConn.Open();
-            SqlCommand comm = DbConn.CreateCommand();
-            comm.CommandText = sql;
-            comm.CommandType = System.Data.CommandType.Text;
-            comm.BeginExecuteNonQuery(BackupEnd, comm);
+            
 
 
 

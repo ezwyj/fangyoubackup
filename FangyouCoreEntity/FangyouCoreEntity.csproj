@@ -49,7 +49,7 @@
     <Compile Include="FileLog.cs" />
     <Compile Include="GlobleVariable.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Sql2000Desktop.cs" />
+    <Compile Include="Sql2000.cs" />
     <Compile Include="Sql2005.cs" />
     <Compile Include="Sql2008.cs" />
     <Compile Include="SqlBase.cs" />

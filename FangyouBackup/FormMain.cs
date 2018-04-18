@@ -107,23 +107,7 @@ namespace FangyouBackup
                 richTextBoxLog.Clear();
                 richTextBoxLog.Text = File.ReadAllText(fileName);
             }
-            var checkSql = new SqlBase();
-
-            switch (checkSql.GetSqlVersion())
-            {
-                case SqlTypeEnum.Sql2000:
-                    var backup2000 = new Sql2000Desktop();
-                    backup2000.Backup();
-                    break;
-                case SqlTypeEnum.Sql2005:
-                    var backup2005 = new Sql2005();
-                    backup2005.Backup();
-                    break;
-                case SqlTypeEnum.Sql2008:
-                    var backup2008 = new Sql2008(fileName);
-                    backup2008.Backup();
-                    break;
-            }
+            
         }
 
         private void notifyIcon1_DoubleClick(object sender, EventArgs e)

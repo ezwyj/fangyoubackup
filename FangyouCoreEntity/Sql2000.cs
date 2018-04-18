@@ -7,7 +7,7 @@ using System.Text;
 
 namespace FangyouCoreEntity
 {
-    public class Sql2000Desktop : SqlBase
+    public class Sql2000 : SqlBase
     {
 
         public override void Backup()
@@ -26,12 +26,9 @@ namespace FangyouCoreEntity
 
         private void bw_DoWork(object sender, DoWorkEventArgs e)
         {
-            _conn = string.Format("server={0};database={1};uid={2};pwd={3}",GlobleVariable.DatabaseAddress, GlobleVariable.DatabaseName, GlobleVariable.DatabaseName, GlobleVariable.DatabasePassword);
+            _conn = string.Format("server={0};database={1};uid={2};pwd={3}",GlobleVariable.DatabaseAddress, GlobleVariable.DatabaseName, GlobleVariable.DatabaseUser, GlobleVariable.DatabasePassword);
             string file = System.Environment.CurrentDirectory+ "\\Backup\\"+ DateTime.Now.ToString("yyyyMMdd")+".bak";
-            if (File.Exists(file))
-            {
-                Directory.Delete(file);
-            }
+            
             //备份
             string sql = "BACKUP DATABASE " + GlobleVariable.DatabaseName + " TO DISK = '" + file ;
             System.Data.SqlClient.SqlConnection DbConn = new SqlConnection(_conn);

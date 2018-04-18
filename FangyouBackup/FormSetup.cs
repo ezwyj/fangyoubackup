@@ -104,6 +104,27 @@ namespace FangyouBackup
             AppSetingHelper.UpdateAppString("SqlType", GlobleVariable.SqlServerType.ToString());
             AppSetingHelper.UpdateAppString("LocalKeeyDay", GlobleVariable.LocalKeeyDay.ToString());
 
+            var result = MessageBox.Show("是否立即执行备份工作？", "提示", MessageBoxButtons.YesNo);
+            if(result== DialogResult.Yes)
+            {
+                var checkSql = new SqlBase();
+
+                switch (checkSql.GetSqlVersion())
+                {
+                    case SqlTypeEnum.Sql2000:
+                        var backup2000 = new Sql2000();
+                        backup2000.Backup();
+                        break;
+                    case SqlTypeEnum.Sql2005:
+                        var backup2005 = new Sql2005();
+                        backup2005.Backup();
+                        break;
+                    case SqlTypeEnum.Sql2008:
+                        var backup2008 = new Sql2008();
+                        backup2008.Backup();
+                        break;
+                }
+            }
 
             this.Close();
         }
@@ -111,7 +132,12 @@ namespace FangyouBackup
         private void FormSetup_Load(object sender, EventArgs e)
         {
             
-          
+         
+                
+                comboBoxDatabase.Items.Add( ConfigurationManager.AppSettings["DatabaseName"].ToString());
+                textBoxDbUser.Text = ConfigurationManager.AppSettings["DatabaseUser"].ToString();
+                textBoxDBPwd.Text  = ConfigurationManager.AppSettings["DatabasePassword"].ToString();
+           
             
            
             
@@ -124,9 +150,10 @@ namespace FangyouBackup
                 string ConnString =
                 String.Format("Data Source={0};Initial Catalog=master;User ID={1};Password={2}", GlobleVariable.DatabaseAddress, textBoxDbUser.Text, textBoxDBPwd.Text);
                 var db = new SqlConnection(ConnString);
-                 string sql = "select name from master..sysdatabases";
-                var cmd = db.CreateCommand();
                 db.Open();
+                string sql = "select name from master..sysdatabases";
+                var cmd = db.CreateCommand();
+                cmd.CommandText = sql;
                 var reader = cmd.ExecuteReader();
                 DataTable dt = new DataTable();
                 dt.Load(reader);

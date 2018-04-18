@@ -10,10 +10,10 @@ namespace FangyouCoreEntity
 {
     public class Sql2008 : SqlBase
     {
-        private FileLog log; 
-        public Sql2008(string logFile)
+        
+        public Sql2008()
         {
-            log = new FileLog(logFile);
+            
         }
         public override void Backup()
         {
@@ -30,7 +30,7 @@ namespace FangyouCoreEntity
                 comm.CommandType = System.Data.CommandType.Text;
 
                 comm.BeginExecuteNonQuery(BackupEnd, comm);
-                log.log(DateTime.Now.ToLongDateString() + "开始备份");
+                GlobleVariable.Logger.Error(DateTime.Now.ToLongDateString() + "开始备份");
             }
            
 
@@ -46,7 +46,7 @@ namespace FangyouCoreEntity
             }
             GlobleVariable.LastBackupTime = DateTime.Now;
 
-            log.log(DateTime.Now.ToLongDateString() + "备份完成");
+            GlobleVariable.Logger.Error(DateTime.Now.ToLongDateString() + "备份完成");
             Report();
         }
     }
