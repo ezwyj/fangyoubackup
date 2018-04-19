@@ -40,5 +40,8 @@ namespace FangyouCoreEntity
         
 
         public static ILog Logger { get; set; }
+
+        public static StringBuilder RunLog { get; set; }
+        public static bool Progress { get; internal set; }
     }
 }

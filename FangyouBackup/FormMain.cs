@@ -98,16 +98,8 @@ namespace FangyouBackup
 
         private void timerRefresh_Tick(object sender, EventArgs e)
         {
-          
-            
-            richTextBoxLog.Text = "";
-            string fileName = System.AppDomain.CurrentDomain.BaseDirectory + "\\logs\\app_log.txt";
-            if (File.Exists(fileName))
-            {
-                richTextBoxLog.Clear();
-                richTextBoxLog.Text = File.ReadAllText(fileName);
-            }
-            
+            richTextBoxLog.Clear();
+            richTextBoxLog.Text = GlobleVariable.RunLog.ToString();
         }
 
         private void notifyIcon1_DoubleClick(object sender, EventArgs e)

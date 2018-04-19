@@ -60,7 +60,7 @@ namespace FangyouBackup
             GlobleVariable.FangyouVer = ConfigurationManager.AppSettings["FangyouVer"];
 
             GlobleVariable.Logger = log4net.LogManager.GetLogger("AppError");
-
+            GlobleVariable.RunLog = new StringBuilder();
 
             Application.Run(new FormMain());
 

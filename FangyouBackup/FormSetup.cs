@@ -85,12 +85,13 @@ namespace FangyouBackup
             AppSetingHelper.UpdateAppString("DatabaseName", GlobleVariable.DatabaseName);
             AppSetingHelper.UpdateAppString("DatabaseUser", GlobleVariable.DatabaseUser);
             AppSetingHelper.UpdateAppString("DatabasePassword", GlobleVariable.DatabasePassword);
-            AppSetingHelper.UpdateAppString("localKeepDay", numericUpDownLocalKeepDay.Value.ToString());
+            AppSetingHelper.UpdateAppString("localKeepDay","-"+ numericUpDownLocalKeepDay.Value.ToString());
             AppSetingHelper.UpdateAppString("BackupTime", numericUpDownBackupTime.Value.ToString());
 
 
             AppSetingHelper.UpdateAppString("RunTime", "1");
 
+            GlobleVariable.LocalKeeyDay = -1 * (int) numericUpDownLocalKeepDay.Value;
 
             string outFangyouClient, outFangyouVer;
             GetFangyouInfo(out outFangyouVer, out outFangyouClient);
