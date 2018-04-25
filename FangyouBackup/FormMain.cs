@@ -58,7 +58,9 @@ namespace FangyouBackup
 
         private void FormMain_Load(object sender, EventArgs e)
         {
-
+            toolStripProgressBar1.Minimum = 0;
+            toolStripProgressBar1.Maximum = 100;
+            toolStripProgressBar1.Step = 2;
             if (ConfigurationManager.AppSettings["RunTime"] == null || ConfigurationManager.AppSettings["RunTime"] == "0")
             {
                 var setup = new FormSetup();
@@ -100,6 +102,18 @@ namespace FangyouBackup
         {
             richTextBoxLog.Clear();
             richTextBoxLog.Text = GlobleVariable.RunLog.ToString();
+            if (GlobleVariable.Progress)
+            {
+                toolStripProgressBar1.PerformStep();
+                if(toolStripProgressBar1.Value >= toolStripProgressBar1.Maximum)
+                {
+                    toolStripProgressBar1.Value = 0;
+                }
+            }
+            else
+            {
+                toolStripProgressBar1.Value = 0;
+            }
         }
 
         private void notifyIcon1_DoubleClick(object sender, EventArgs e)

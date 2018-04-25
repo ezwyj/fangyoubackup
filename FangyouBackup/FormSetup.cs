@@ -109,7 +109,7 @@ namespace FangyouBackup
             if(result== DialogResult.Yes)
             {
                 var checkSql = new SqlBase();
-
+                GlobleVariable.Progress = true;
                 switch (checkSql.GetSqlVersion())
                 {
                     case SqlTypeEnum.Sql2000:

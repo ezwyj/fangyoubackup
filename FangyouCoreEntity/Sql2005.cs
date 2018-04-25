@@ -49,8 +49,17 @@ namespace FangyouCoreEntity
             {
                 cmd.Connection.Close();
             }
+            if (CheckFile())
+            {
+                GlobleVariable.RunLog.Append("备份完成");
+
+            }
+            GlobleVariable.Logger.Info("备份完成");
+            GlobleVariable.Progress = false;
             GlobleVariable.LastBackupTime = DateTime.Now;
             GlobleVariable.RunLog.Append(DateTime.Now.ToString() + "异步备份完成\n\r");
+            string file = System.Environment.CurrentDirectory + "\\Backup\\" + DateTime.Now.AddDays(GlobleVariable.LocalKeeyDay * -1).ToString("yyyyMMdd") + ".bak";
+            File.Delete(file);
         }
     }
 }

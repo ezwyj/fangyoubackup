@@ -58,6 +58,14 @@ namespace FangyouCoreEntity
             GlobleVariable.RunLog.Append(DateTime.Now.ToString() + "异步备份结束\n\r");
             GlobleVariable.Logger.Error(DateTime.Now.ToLongDateString() + "备份完成");
             Report();
+
+            if (CheckFile())
+            {
+                GlobleVariable.RunLog.Append("备份完成");
+
+            }
+            GlobleVariable.Logger.Info("备份完成");
+            GlobleVariable.Progress = false;
         }
     }
 }

@@ -53,6 +53,7 @@ namespace FangyouCoreEntity
                 comm.ExecuteNonQuery();
                 GlobleVariable.RunLog.Append(DateTime.Now.ToString() +"开始备份");
                 GlobleVariable.Progress = true;
+                GlobleVariable.Logger.Info("开始备份");
             }
             catch(Exception ee )
             {
@@ -75,6 +76,12 @@ namespace FangyouCoreEntity
             }
             GlobleVariable.Logger.Info("备份完成");
             GlobleVariable.Progress = false;
+
+             
+            string file = System.Environment.CurrentDirectory + "\\Backup\\" + DateTime.Now.AddDays(GlobleVariable.LocalKeeyDay * -1).ToString("yyyyMMdd") + ".bak";
+            File.Delete(file);
+
+            Report();
         }
     }
 }
