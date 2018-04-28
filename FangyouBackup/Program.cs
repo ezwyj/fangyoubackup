@@ -3,9 +3,6 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Threading;
 using System.Windows.Forms;
-using Quartz;
-using Quartz.Impl;
-using Quartz.Impl.Triggers;
 using System.Text;
 using FangyouCoreEntity;
 using log4net;
@@ -28,13 +25,16 @@ namespace FangyouBackup
             AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(CurrentDomain_UnhandledException);
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            
+            GlobleVariable.RunLog = new StringBuilder();
             int runTime = 0;
             var firstRunBool = int.TryParse(ConfigurationManager.AppSettings["runTime"].ToString(), out runTime);
 
+            GlobleVariable.InfoLogger = log4net.LogManager.GetLogger("loginfo");
+            GlobleVariable.ErrorLogger = log4net.LogManager.GetLogger("logerror");
+
+            log4net.Config.XmlConfigurator.Configure();
 
 
-           
 
             int BackupTime = 0;
             if (int.TryParse(ConfigurationManager.AppSettings["BackupTime"].ToString(), out BackupTime))
@@ -70,13 +70,14 @@ namespace FangyouBackup
                 }
                 else
                 {
-                    GlobleVariable.LocalKeeyDay = 1;
+                    GlobleVariable.LocalKeeyDay = -1;
                 }
 
 
+               
 
+                FluentScheduler.JobManager.Initialize(new BackupJobFactory());
 
-                GlobleVariable.BackupTime = int.Parse(ConfigurationManager.AppSettings["RunTime"].ToString());
             }
 
             //DateTime lasttime = DateTime.Now;
@@ -87,12 +88,9 @@ namespace FangyouBackup
             GlobleVariable.FangyouClient = ConfigurationManager.AppSettings["FangyouClient"];
             GlobleVariable.FangyouVer = ConfigurationManager.AppSettings["FangyouVer"];
 
-            GlobleVariable.InfoLogger = log4net.LogManager.GetLogger("loginfo");
-            GlobleVariable.ErrorLogger = log4net.LogManager.GetLogger("logerror");
 
-            log4net.Config.XmlConfigurator.Configure();
+           
 
-            GlobleVariable.RunLog = new StringBuilder();
 
             Application.Run(new FormMain());
 

@@ -86,7 +86,7 @@ namespace FangyouBackup
             AppSetingHelper.UpdateAppString("DatabaseUser", AESHelper.AESEncrypt(GlobleVariable.DatabaseUser, "adsfadsfadfadsfasasdfads"));
             AppSetingHelper.UpdateAppString("DatabasePassword", AESHelper.AESEncrypt(GlobleVariable.DatabasePassword, "adsfadsfadfadsfasasdfads") );
             AppSetingHelper.UpdateAppString("localKeepDay","-"+ numericUpDownLocalKeepDay.Value.ToString());
-            AppSetingHelper.UpdateAppString("BackupTime", numericUpDownBackupTime.Value.ToString());
+            AppSetingHelper.UpdateAppString("BackupTime",  numericUpDownBackupTime.Value.ToString() );
 
 
             AppSetingHelper.UpdateAppString("RunTime", "1");

@@ -1,7 +1,8 @@
 ﻿using FangyouCoreEntity;
-using Quartz;
+using FluentScheduler;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
@@ -10,7 +11,7 @@ namespace FangyouBackup
 {
     public class BackupJob : IJob
     {
-        public void Execute(IJobExecutionContext context)
+        public void Execute()
         {
             var checkSql =new SqlBase();
 
@@ -31,4 +32,19 @@ namespace FangyouBackup
             }
         }
     }
+
+    internal class BackupJobFactory : Registry
+    {
+        public BackupJobFactory()
+        {
+
+
+            // 在一个指定时间执行计划任务（最常用。这里是在每天的下午 1:10 分执行）
+            var min = int.Parse(ConfigurationManager.AppSettings["BackupTimeMin"].ToString());
+            Schedule<BackupJob>().ToRunEvery(1).Days().At(GlobleVariable.BackupTime, min);
+
+          
+        }
+    }
+
 }

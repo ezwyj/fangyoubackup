@@ -67,9 +67,7 @@ namespace FangyouBackup
 
 
 
-            string cronExpression = "0 0 "+GlobleVariable.BackupTime.ToString()+" * * ? ";　　//=>这是指每天的9点和16点执行任务
-            QuartzManager.ExecuteByCron<BackupJob>(cronExpression);　　//=>这是调用Cron计划方法
-
+        
             labelFangyouClient.Text = GlobleVariable.FangyouClient;
             labelFangyouVer.Text = GlobleVariable.FangyouVer;
         }
