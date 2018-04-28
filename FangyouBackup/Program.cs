@@ -63,7 +63,7 @@ namespace FangyouBackup
                 GlobleVariable.DatabaseUser = AESHelper.AESDecrypt(ConfigurationManager.AppSettings["DatabaseUser"], "adsfadsfadfadsfasasdfads");
                 GlobleVariable.DatabasePassword = AESHelper.AESDecrypt(ConfigurationManager.AppSettings["DatabasePassword"], "adsfadsfadfadsfasasdfads");
 
-                int outLocalKeepDay = 1;
+                int outLocalKeepDay = -1;
                 if (int.TryParse(ConfigurationManager.AppSettings["LocalKeepDay"], out outLocalKeepDay))
                 {
                     GlobleVariable.LocalKeeyDay = outLocalKeepDay;

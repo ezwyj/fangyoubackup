@@ -45,20 +45,27 @@ namespace FangyouCoreEntity
 
         public void Report()
         {
-            System.Net.WebClient WebClientObj = new System.Net.WebClient();
+            try
+            {
+                System.Net.WebClient WebClientObj = new System.Net.WebClient();
 
-            var BackupReportEntity = new BackupReport();
-            BackupReportEntity.BackupTime = DateTime.Now;
-            BackupReportEntity.BackupState = true;
-            BackupReportEntity.FangyouClient = GlobleVariable.FangyouClient;
-            BackupReportEntity.FangyouVer = GlobleVariable.FangyouVer;
+                var BackupReportEntity = new BackupReport();
+                BackupReportEntity.BackupTime = DateTime.Now;
+                BackupReportEntity.BackupState = true;
+                BackupReportEntity.FangyouClient = GlobleVariable.FangyouClient;
+                BackupReportEntity.FangyouVer = GlobleVariable.FangyouVer;
 
 
-            WebClient client = new WebClient();
-            // client.UseDefaultCredentials = true;
-            string URI = System.Configuration.ConfigurationManager.AppSettings["url"] + "?report=" + JsonConvert.SerializeObject(BackupReportEntity);
-            client.DownloadData(URI);
-            GlobleVariable.InfoLogger.Info("上报服务器成功");
+                WebClient client = new WebClient();
+                // client.UseDefaultCredentials = true;
+                string URI = System.Configuration.ConfigurationManager.AppSettings["url"] + "?report=" + JsonConvert.SerializeObject(BackupReportEntity);
+                client.DownloadData(URI);
+                GlobleVariable.InfoLogger.Info("上报服务器成功");
+            }
+            catch(Exception e)
+            {
+                GlobleVariable.ErrorLogger.Error("上传出错");
+            }
         }
 
 
@@ -71,6 +78,10 @@ namespace FangyouCoreEntity
         {
             GlobleVariable.InfoLogger.Info("删除历史文件");
             string file = System.Environment.CurrentDirectory + "\\Backup\\" + DateTime.Now.AddDays(GlobleVariable.LocalKeeyDay).ToString("yyyyMMdd") + ".bak";
+            if (File.Exists(file))
+            {
+                File.Delete(file);
+            }
         }
 
         public static long GetHardDiskFreeSpace()

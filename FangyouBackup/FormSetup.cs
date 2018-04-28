@@ -85,7 +85,7 @@ namespace FangyouBackup
             AppSetingHelper.UpdateAppString("DatabaseName", AESHelper.AESEncrypt(GlobleVariable.DatabaseName, "adsfadsfadfadsfasasdfads"));
             AppSetingHelper.UpdateAppString("DatabaseUser", AESHelper.AESEncrypt(GlobleVariable.DatabaseUser, "adsfadsfadfadsfasasdfads"));
             AppSetingHelper.UpdateAppString("DatabasePassword", AESHelper.AESEncrypt(GlobleVariable.DatabasePassword, "adsfadsfadfadsfasasdfads") );
-            AppSetingHelper.UpdateAppString("localKeepDay","-"+ numericUpDownLocalKeepDay.Value.ToString());
+            AppSetingHelper.UpdateAppString("LocalKeepDay", "-"+ numericUpDownLocalKeepDay.Value.ToString());
             AppSetingHelper.UpdateAppString("BackupTime",  numericUpDownBackupTime.Value.ToString() );
 
 
@@ -125,6 +125,7 @@ namespace FangyouBackup
                         backup2008.Backup();
                         break;
                 }
+                
             }
 
             this.Close();

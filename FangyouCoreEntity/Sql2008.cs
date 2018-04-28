@@ -2,9 +2,8 @@
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.IO;
-using System.Linq;
-using System.Text;
-using static System.Net.Mime.MediaTypeNames;
+
+
 
 namespace FangyouCoreEntity
 {
@@ -66,6 +65,7 @@ namespace FangyouCoreEntity
             }
             GlobleVariable.InfoLogger.Info("备份完成");
             GlobleVariable.Progress = false;
+            DeleteOldFile();
         }
     }
 }

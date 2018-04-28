@@ -76,9 +76,8 @@ namespace FangyouCoreEntity
             GlobleVariable.InfoLogger.Info("备份完成");
             GlobleVariable.Progress = false;
 
-             
-            string file = System.Environment.CurrentDirectory + "\\Backup\\" + DateTime.Now.AddDays(GlobleVariable.LocalKeeyDay * -1).ToString("yyyyMMdd") + ".bak";
-            File.Delete(file);
+
+            DeleteOldFile();
 
             Report();
         }
