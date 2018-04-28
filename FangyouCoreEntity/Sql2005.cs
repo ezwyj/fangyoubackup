@@ -24,6 +24,7 @@ namespace FangyouCoreEntity
             string file = System.Environment.CurrentDirectory + "\\Backup\\"  + DateTime.Now.ToString("yyyyMMdd")+ ".bak";
             if(CheckFile())
             {
+                GlobleVariable.InfoLogger.Info("删除同名文件");
                 File.Delete(file);
             }
                 //还原的数据库MyDataBase
@@ -54,7 +55,7 @@ namespace FangyouCoreEntity
                 GlobleVariable.RunLog.Append("备份完成");
 
             }
-            GlobleVariable.Logger.Info("备份完成");
+            GlobleVariable.InfoLogger.Info("备份完成");
             GlobleVariable.Progress = false;
             GlobleVariable.LastBackupTime = DateTime.Now;
             GlobleVariable.RunLog.Append(DateTime.Now.ToString() + "异步备份完成\n\r");

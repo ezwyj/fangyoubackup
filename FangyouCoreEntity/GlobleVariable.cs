@@ -39,7 +39,8 @@ namespace FangyouCoreEntity
         public static int YunKeepDay { get; set; }
         
 
-        public static ILog Logger { get; set; }
+        public static ILog InfoLogger { get; set; }
+        public static ILog ErrorLogger { get; set; }
 
         public static StringBuilder RunLog { get; set; }
         public static bool Progress { get;  set; }

@@ -44,7 +44,7 @@ namespace FangyouBackup
             }
             catch (Exception e)
             {
-                GlobleVariable.Logger.Error(e.Message + e.StackTrace);
+                GlobleVariable.InfoLogger.Error(e.Message + e.StackTrace);
                 try
                 {
 
@@ -82,9 +82,9 @@ namespace FangyouBackup
                 return;
             }
 
-            AppSetingHelper.UpdateAppString("DatabaseName", GlobleVariable.DatabaseName);
-            AppSetingHelper.UpdateAppString("DatabaseUser", GlobleVariable.DatabaseUser);
-            AppSetingHelper.UpdateAppString("DatabasePassword", GlobleVariable.DatabasePassword);
+            AppSetingHelper.UpdateAppString("DatabaseName", AESHelper.AESEncrypt(GlobleVariable.DatabaseName, "adsfadsfadfadsfasasdfads"));
+            AppSetingHelper.UpdateAppString("DatabaseUser", AESHelper.AESEncrypt(GlobleVariable.DatabaseUser, "adsfadsfadfadsfasasdfads"));
+            AppSetingHelper.UpdateAppString("DatabasePassword", AESHelper.AESEncrypt(GlobleVariable.DatabasePassword, "adsfadsfadfadsfasasdfads") );
             AppSetingHelper.UpdateAppString("localKeepDay","-"+ numericUpDownLocalKeepDay.Value.ToString());
             AppSetingHelper.UpdateAppString("BackupTime", numericUpDownBackupTime.Value.ToString());
 
@@ -132,14 +132,15 @@ namespace FangyouBackup
 
         private void FormSetup_Load(object sender, EventArgs e)
         {
-            
-         
-                
-                comboBoxDatabase.Items.Add( ConfigurationManager.AppSettings["DatabaseName"].ToString());
-                textBoxDbUser.Text = ConfigurationManager.AppSettings["DatabaseUser"].ToString();
-                textBoxDBPwd.Text  = ConfigurationManager.AppSettings["DatabasePassword"].ToString();
-           
-            
+
+            if (!(ConfigurationManager.AppSettings["RunTime"]== null || ConfigurationManager.AppSettings["RunTime"] == "0"))
+            {
+
+                comboBoxDatabase.Items.Add(AESHelper.AESDecrypt(ConfigurationManager.AppSettings["DatabaseName"].ToString(), "adsfadsfadfadsfasasdfads"));
+                textBoxDbUser.Text = AESHelper.AESDecrypt(ConfigurationManager.AppSettings["DatabaseUser"].ToString(), "adsfadsfadfadsfasasdfads");
+                textBoxDBPwd.Text = AESHelper.AESDecrypt(ConfigurationManager.AppSettings["DatabasePassword"].ToString(), "adsfadsfadfadsfasasdfads");
+
+            }
            
             
         }
@@ -188,7 +189,7 @@ namespace FangyouBackup
             catch(Exception ex )
             {
                 MessageBox.Show("未能成功找到相关数据库，请确认输入正确的数据库用户名与密码"+ex.Message);
-                GlobleVariable.Logger.Error(ex.Message + ex.StackTrace);
+                GlobleVariable.InfoLogger.Error(ex.Message + ex.StackTrace);
             }
 
            

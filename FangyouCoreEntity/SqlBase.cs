@@ -58,16 +58,18 @@ namespace FangyouCoreEntity
             // client.UseDefaultCredentials = true;
             string URI = System.Configuration.ConfigurationManager.AppSettings["url"] + "?report=" + JsonConvert.SerializeObject(BackupReportEntity);
             client.DownloadData(URI);
-
+            GlobleVariable.InfoLogger.Info("上报服务器成功");
         }
 
 
         protected bool CheckFile()
         {
+            GlobleVariable.InfoLogger.Info("检查今日备份文件");
             return File.Exists(System.Environment.CurrentDirectory + "\\Backup\\" + DateTime.Now.ToString("yyyyMMdd") + ".bak");
         }
         protected void DeleteOldFile()
         {
+            GlobleVariable.InfoLogger.Info("删除历史文件");
             string file = System.Environment.CurrentDirectory + "\\Backup\\" + DateTime.Now.AddDays(GlobleVariable.LocalKeeyDay).ToString("yyyyMMdd") + ".bak";
         }
 
@@ -83,7 +85,7 @@ namespace FangyouCoreEntity
                     freeSpace = drive.TotalFreeSpace / (1024 * 1024 * 1024);
                 }
             }
-            Console.WriteLine("空间大小:{0}G",freeSpace.ToString());
+            GlobleVariable.InfoLogger.Info(string.Format("空间大小:{0}G",freeSpace.ToString()));
             return freeSpace;
         }
 
@@ -103,7 +105,7 @@ namespace FangyouCoreEntity
             db.Close();
             db.Dispose();
             long fileSize = fileInfo.Length / (1024 * 1024 * 1024);
-            Console.WriteLine("空间文件大小:{0}G", fileSize.ToString());
+            GlobleVariable.InfoLogger.Info(string.Format("空间文件大小:{0}G", fileSize.ToString()));
             return fileSize;
         }
 

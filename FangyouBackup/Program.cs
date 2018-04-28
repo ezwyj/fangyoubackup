@@ -33,6 +33,9 @@ namespace FangyouBackup
             var firstRunBool = int.TryParse(ConfigurationManager.AppSettings["runTime"].ToString(), out runTime);
 
 
+
+           
+
             int BackupTime = 0;
             if (int.TryParse(ConfigurationManager.AppSettings["BackupTime"].ToString(), out BackupTime))
             {
@@ -48,8 +51,33 @@ namespace FangyouBackup
             {
                 GlobleVariable.DatabaseAddress = "127.0.0.1";
             }
-            GlobleVariable.DatabasePassword = ConfigurationManager.AppSettings["DatabasePassword"];
-            GlobleVariable.DatabaseUser = ConfigurationManager.AppSettings["DatabaseUser"];
+            if (ConfigurationManager.AppSettings["RunTime"] == null || ConfigurationManager.AppSettings["RunTime"] == "0")
+            {
+                var setup = new FormSetup();
+                setup.ShowDialog();
+            }
+            else
+            {
+                GlobleVariable.DatabaseAddress = ConfigurationManager.AppSettings["DatabaseAddress"].ToString();
+                GlobleVariable.DatabaseName = AESHelper.AESDecrypt(ConfigurationManager.AppSettings["DatabaseName"].ToString(), "adsfadsfadfadsfasasdfads");
+                GlobleVariable.DatabaseUser = AESHelper.AESDecrypt(ConfigurationManager.AppSettings["DatabaseUser"], "adsfadsfadfadsfasasdfads");
+                GlobleVariable.DatabasePassword = AESHelper.AESDecrypt(ConfigurationManager.AppSettings["DatabasePassword"], "adsfadsfadfadsfasasdfads");
+
+                int outLocalKeepDay = 1;
+                if (int.TryParse(ConfigurationManager.AppSettings["LocalKeepDay"], out outLocalKeepDay))
+                {
+                    GlobleVariable.LocalKeeyDay = outLocalKeepDay;
+                }
+                else
+                {
+                    GlobleVariable.LocalKeeyDay = 1;
+                }
+
+
+
+
+                GlobleVariable.BackupTime = int.Parse(ConfigurationManager.AppSettings["RunTime"].ToString());
+            }
 
             //DateTime lasttime = DateTime.Now;
             //DateTime.TryParse(ConfigurationManager.AppSettings["LastBackupTime"].ToString(), out lasttime);
@@ -59,7 +87,11 @@ namespace FangyouBackup
             GlobleVariable.FangyouClient = ConfigurationManager.AppSettings["FangyouClient"];
             GlobleVariable.FangyouVer = ConfigurationManager.AppSettings["FangyouVer"];
 
-            GlobleVariable.Logger = log4net.LogManager.GetLogger("AppError");
+            GlobleVariable.InfoLogger = log4net.LogManager.GetLogger("loginfo");
+            GlobleVariable.ErrorLogger = log4net.LogManager.GetLogger("logerror");
+
+            log4net.Config.XmlConfigurator.Configure();
+
             GlobleVariable.RunLog = new StringBuilder();
 
             Application.Run(new FormMain());
@@ -72,7 +104,7 @@ namespace FangyouBackup
             string str = GetExceptionMsg(e.ExceptionObject as Exception, e.ToString());
             MessageBox.Show(str, "系统错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
             Exception exp = e.ExceptionObject as Exception;
-            GlobleVariable.Logger.Error(exp.Message + exp.StackTrace);
+            GlobleVariable.ErrorLogger.Error(exp.Message + exp.StackTrace);
             Application.Exit();
             Application.ExitThread();
             System.Environment.Exit(0);
@@ -82,7 +114,7 @@ namespace FangyouBackup
         {
             string str = GetExceptionMsg(e.Exception, e.ToString());
             MessageBox.Show(str, "系统错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            GlobleVariable.Logger.Error(e.Exception.Message + e.Exception.StackTrace);
+            GlobleVariable.ErrorLogger.Error(e.Exception.Message + e.Exception.StackTrace);
             Application.Exit();
             Application.ExitThread();
             System.Environment.Exit(0);

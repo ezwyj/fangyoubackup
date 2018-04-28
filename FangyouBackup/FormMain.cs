@@ -29,6 +29,7 @@ namespace FangyouBackup
 
         private void buttonMin_Click(object sender, EventArgs e)
         {
+            
             this.Hide();
             this.ShowInTaskbar = true;
 
@@ -61,32 +62,7 @@ namespace FangyouBackup
             toolStripProgressBar1.Minimum = 0;
             toolStripProgressBar1.Maximum = 100;
             toolStripProgressBar1.Step = 2;
-            if (ConfigurationManager.AppSettings["RunTime"] == null || ConfigurationManager.AppSettings["RunTime"] == "0")
-            {
-                var setup = new FormSetup();
-                setup.ShowDialog();
-            }
-            else
-            {
-                GlobleVariable.DatabaseAddress = ConfigurationManager.AppSettings["DatabaseAddress"].ToString();
-                GlobleVariable.DatabaseName = ConfigurationManager.AppSettings["DatabaseName"].ToString();
-                GlobleVariable.DatabaseUser = ConfigurationManager.AppSettings["DatabaseUser"].ToString();
-                GlobleVariable.DatabasePassword = ConfigurationManager.AppSettings["DatabasePassword"].ToString();
-                int outLocalKeepDay = 1;
-                if(int.TryParse(ConfigurationManager.AppSettings["LocalKeepDay"], out outLocalKeepDay))
-                {
-                    GlobleVariable.LocalKeeyDay = outLocalKeepDay;
-                }
-                else
-                {
-                    GlobleVariable.LocalKeeyDay = 1;
-                }
-                
-               
-                
-               
-                GlobleVariable.BackupTime=int.Parse( ConfigurationManager.AppSettings["RunTime"].ToString());
-            }
+            
             
 
 

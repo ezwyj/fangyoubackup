@@ -53,13 +53,12 @@ namespace FangyouCoreEntity
                 comm.ExecuteNonQuery();
                 GlobleVariable.RunLog.Append(DateTime.Now.ToString() +"开始备份");
                 GlobleVariable.Progress = true;
-                GlobleVariable.Logger.Info("开始备份");
+                GlobleVariable.InfoLogger.Info("开始2000备份");
             }
             catch(Exception ee )
             {
                 GlobleVariable.Progress = false;
-                Console.WriteLine(ee.Message);
-                GlobleVariable.Logger.Error(ee.Message);
+                GlobleVariable.InfoLogger.Error(ee.Message);
                 throw ee;
             }
            
@@ -72,9 +71,9 @@ namespace FangyouCoreEntity
             if (CheckFile())
             {
                 GlobleVariable.RunLog.Append("备份完成");
-
+                
             }
-            GlobleVariable.Logger.Info("备份完成");
+            GlobleVariable.InfoLogger.Info("备份完成");
             GlobleVariable.Progress = false;
 
              

@@ -40,7 +40,7 @@ namespace FangyouCoreEntity
 
                 comm.BeginExecuteNonQuery(BackupEnd, comm);
                 GlobleVariable.RunLog.Append(DateTime.Now.ToString()+ "开始异步备份\n\r");
-                GlobleVariable.Logger.Error(DateTime.Now.ToLongDateString() + "开始备份");
+                GlobleVariable.InfoLogger.Info(DateTime.Now.ToLongDateString() + "开始备份");
  
            
 
@@ -56,7 +56,7 @@ namespace FangyouCoreEntity
             }
             GlobleVariable.LastBackupTime = DateTime.Now;
             GlobleVariable.RunLog.Append(DateTime.Now.ToString() + "异步备份结束\n\r");
-            GlobleVariable.Logger.Error(DateTime.Now.ToLongDateString() + "备份完成");
+            GlobleVariable.InfoLogger.Info (DateTime.Now.ToLongDateString() + "备份完成");
             Report();
 
             if (CheckFile())
@@ -64,7 +64,7 @@ namespace FangyouCoreEntity
                 GlobleVariable.RunLog.Append("备份完成");
 
             }
-            GlobleVariable.Logger.Info("备份完成");
+            GlobleVariable.InfoLogger.Info("备份完成");
             GlobleVariable.Progress = false;
         }
     }

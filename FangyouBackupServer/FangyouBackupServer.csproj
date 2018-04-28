@@ -66,6 +66,7 @@
     <Compile Include="FangyouBackupHandler.ashx.cs">
       <DependentUpon>FangyouBackupHandler.ashx</DependentUpon>
     </Compile>
+    <Compile Include="FileLog.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
